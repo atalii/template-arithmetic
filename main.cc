@@ -38,6 +38,13 @@ public:
 };
 
 template <typename LHS, typename RHS>
+class LEThan<S<LHS>, S<RHS>>
+{
+public:
+	using Result = LEThan<LHS, RHS>::Result;
+};
+
+template <typename LHS, typename RHS>
 class GThan {
 public:
 	using Result = typename std::conditional<
@@ -63,6 +70,9 @@ static_assert(std::is_same<ZeroLEOne, std::true_type>::value, "0 <= 1");
 
 using OneLEZero = LEThan<One, Zero>::Result;
 static_assert(std::is_same<OneLEZero, std::false_type>::value, "1 </= 0");
+
+using TwoLEFour = LEThan<Two, Four>::Result;
+static_assert(std::is_same<TwoLEFour, std::true_type>::value, "2 <= 4");
 
 using OneGZero = GThan<One, Zero>::Result;
 static_assert(std::is_same<OneGZero, std::true_type>::value, "1 > 0");
